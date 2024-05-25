@@ -1,0 +1,264 @@
+{% comment %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "D:\HocTap\code\BTL-Python\PythonWeb\apkDetection\statis\css\bootstrap.min.css" type = "text/css"> 
+    <title>APK Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .buttons button:hover {
+            background-color: #0056b3;
+        }
+        .buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .file-path {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>APK Detection</h1>
+        <input type="file" id="apkFile" style="display: none;" accept=".apk"/>
+        <div class="file-info">
+            <label for="apkFileLabel">File name: </label>
+            <span id="apkFileLabel"></span>
+        </div>
+        <div class="buttons">
+            <button onclick="selectFile()">Upload</button>
+            <button onclick="detect()" id="detectButton" disabled>Detect</button>
+            <button onclick="clearAll()">Clear</button>
+        </div>
+        <div class="result">
+            <label id="resultLabel"></label>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript cho xử lý sự kiện
+        function selectFile() {
+            document.getElementById('apkFile').click();
+        }
+
+        document.getElementById('apkFile').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                document.getElementById('apkFileLabel').innerText = file.name;
+                document.getElementById('detectButton').disabled = false;
+            }
+        });
+
+        async function detect() {
+            const apkFile = document.getElementById('apkFile').files[0];
+            if (!apkFile) {
+                alert('Please select an APK file!');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', apkFile);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                document.getElementById('resultLabel').innerText = 'Prediction: ' + data.prediction;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error occurred during prediction');
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('apkFile').value = '';
+            document.getElementById('apkFileLabel').innerText = '';
+            document.getElementById('resultLabel').innerText = '';
+            document.getElementById('detectButton').disabled = true;
+        }
+    </script>
+</body>
+</html> 
+ {% endcomment %}
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>APK Detection</title>
+     <style>
+         body {
+             font-family: Arial, sans-serif;
+             background-color: #f0f0f0;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+             margin: 0;
+         }
+         .container {
+             background-color: white;
+             padding: 20px;
+             border-radius: 8px;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+             text-align: center;
+             max-width: 700px;
+             width: 100%;
+         }
+         .container h1 {
+             margin-bottom: 20px;
+         }
+         .buttons {
+             display: flex;
+             justify-content: space-between;
+             margin-top: 20px;
+         }
+         .buttons button {
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             background-color: #007bff;
+             color: white;
+             cursor: pointer;
+             transition: background-color 0.3s;
+         }
+         .buttons button:hover {
+             background-color: #0056b3;
+         }
+         .buttons button:disabled {
+             background-color: #cccccc;
+             cursor: not-allowed;
+         }
+         .result {
+             margin-top: 20px;
+         }
+         .file-path {
+             margin-top: 10px;
+         }
+     </style>
+ </head>
+ <body>
+     <div class="container">
+         <h1>APK Detection</h1>
+         <input type="file" id="apkFile" style="display: none;" accept=".apk"/>
+         <div class="file-info">
+             <label for="apkFileLabel">File name: </label>
+             <span id="apkFileLabel"></span>
+         </div>
+         <div class="buttons">
+             <button onclick="selectFile()">Upload</button>
+             <button onclick="detect()" id="detectButton" disabled>Detect</button>
+             <button onclick="clearAll()">Clear</button>
+         </div>
+         <div class="result">
+             <label id="resultLabel"></label>
+         </div>
+     </div>
+ 
+     <script>
+         function getCookie(name) {
+             let cookieValue = null;
+             if (document.cookie && document.cookie !== '') {
+                 const cookies = document.cookie.split(';');
+                 for (let i = 0; i < cookies.length; i++) {
+                     const cookie = cookies[i].trim();
+                     if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+ 
+         const csrftoken = getCookie('csrftoken');
+ 
+         function selectFile() {
+             document.getElementById('apkFile').click();
+         }
+ 
+         document.getElementById('apkFile').addEventListener('change', function() {
+             const file = this.files[0];
+             if (file) {
+                 document.getElementById('apkFileLabel').innerText = file.name;
+                 document.getElementById('detectButton').disabled = false;
+             }
+         });
+ 
+         async function detect() {
+             const apkFile = document.getElementById('apkFile').files[0];
+             if (!apkFile) {
+                 alert('Please select an APK file!');
+                 return;
+             }
+             const formData = new FormData();
+             formData.append('file', apkFile);
+ 
+             try {
+                 const response = await fetch('/predict/', {
+                     method: 'POST',
+                     headers: {
+                         'X-CSRFToken': csrftoken
+                     },
+                     body: formData
+                 });
+                 const data = await response.json();
+                 document.getElementById('resultLabel').innerText = 'Prediction: ' + data.prediction;
+             } catch (error) {
+                 console.error('Error:', error);
+                 alert('Error occurred during prediction');
+             }
+         }
+ 
+         function clearAll() {
+             document.getElementById('apkFile').value = '';
+             document.getElementById('apkFileLabel').innerText = '';
+             document.getElementById('resultLabel').innerText = '';
+             document.getElementById('detectButton').disabled = true;
+         }
+     </script>
+ </body>
+ </html>
+ 
