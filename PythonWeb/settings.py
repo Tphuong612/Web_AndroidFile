@@ -30,7 +30,14 @@ SECRET_KEY = "django-insecure-3=z08z!b%bxclqhksn$)8ekm0wb%wu(j616w7_j9j%e7b-j!_s
 DEBUG = True
 
 # ALLOWED_HOSTS = ['.vercel.app']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.ngrok-free.app', '127.0.0.1', 'localhost']
+CSRF_TRUSTED_ORIGINS = [
+    # "https://*.ngrok-free.app"
+    # Các nguồn khác nếu cần
+    "https://*.ngrok-free.app",
+    "http://*.ngrok-free.app"
+    
+]
 
 # Application definition
 
@@ -42,9 +49,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apkDetection",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
 ]
 
 ROOT_URLCONF = "PythonWeb.urls"

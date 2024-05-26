@@ -16,4 +16,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PythonWeb.settings")
 
 application = get_wsgi_application()
 
-app = application
+# def https_app(environ, start_response):
+#     environ["wsgi.url_scheme"] = "https"
+#     return django_app(environ, start_response)
+
+
+# application = https_app
