@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-#Tạo ra các đường dẫn url để liên kết các base lại với nhau
+#Tạo ra các đường dẫn url để liên kết các page lại với nhau
 from django.contrib import admin
 from django.urls import path, include
 
