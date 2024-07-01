@@ -93,7 +93,6 @@
         const csrftoken = getCookie('csrftoken');
 
         function selectFile() {
-            #Upload file
             document.getElementById('apkFile').click();
         }
 
@@ -106,7 +105,6 @@
         });
  
         async function detect() {
-            #Xử lý nút Detect
             const apkFile = document.getElementById('apkFile').files[0];
             if (!apkFile) {
                 alert('Please select an APK file!');
@@ -132,7 +130,6 @@
         }
 
         function clearAll() {
-            #Xử lí nút Clear
             document.getElementById('apkFile').value = '';
             document.getElementById('apkFileLabel').innerText = '';
             document.getElementById('resultLabel').innerText = '';
